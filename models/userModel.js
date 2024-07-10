@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { name } from "nodeman/lib/mustache";
+
 
 const userSchema = new mongoose.Schema({
     name:{
