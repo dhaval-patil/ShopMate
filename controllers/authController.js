@@ -37,7 +37,7 @@ export const registerController = async (req,res) => {
         const hashedPassword = await hashPassword(password)
 
         //save
-        const user = await new userModel({name, email, phone, address, password:hashPassword}).save()
+        const user = await new userModel({name, email, phone, address, password:hashedPassword}).save()
 
         res.status(201).send({
             success:true,
@@ -77,11 +77,11 @@ export const loginController = async (req,res) => {
         if(!match){
             return res.status(200).send({
                 success:false,
-                message:'Invalid PAssword',
+                message:'Invalid Password',
             });
         }
         //token
-        const token = await JWT.sign({ _id: user._id }, process.env.JWT_SECRET,{
+        const token = await JWT.sign({ _id: user._id }, process.env.JWT_SECRET, {
             expiresIn: "7d",
         });
         res.status(200).send({
@@ -106,3 +106,14 @@ export const loginController = async (req,res) => {
         })
     }
 };
+
+// test Controller
+
+export const testController = (req,res) => {
+    try {
+        res.send('protected');
+    } catch (error) {
+        console.log(error);
+        res.send({error})
+    }
+}
