@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import "../../styles/AuthStyles.css";
 
-const ForgotPasssword = () => {
+const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [answer, setAnswer] = useState("");
@@ -16,7 +16,7 @@ const ForgotPasssword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/api/v1/auth/forgot-password", {
+      const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/forgot-password`, {
         email,
         newPassword,
         answer,
@@ -82,4 +82,4 @@ const ForgotPasssword = () => {
   );
 };
 
-export default ForgotPasssword;
+export default ForgotPassword;
