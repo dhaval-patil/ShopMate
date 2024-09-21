@@ -5,24 +5,24 @@ const userSchema = new mongoose.Schema({
     name:{
         type:String,
         required:true,
-        trim:true
+        trim:true,
     },
     email:{
         type:String,
         required:true,
-        unique:true
+        unique:true,
     },
     password:{
         type:String,
-        required:true
+        required:true,
     },
     phone:{
         type:String,
-        required:true
+        required:true,
     },
     address:{
         type:String,
-        required:true
+        required:true,
     },
     answer:{
         type: String,
@@ -30,8 +30,8 @@ const userSchema = new mongoose.Schema({
     },
     role:{
         type:Number,
-        default:0
-    }
-},{timestamp:true})
+        default:0,
+    },
+},{timestamp:true});
 
 export default mongoose.model('users', userSchema)
