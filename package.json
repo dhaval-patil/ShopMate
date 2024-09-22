@@ -23,6 +23,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.5.0",
     "morgan": "^1.10.0",
-    "nodeman": "^1.1.2"
+    "nodeman": "^1.1.2",
+    "slugify": "^1.6.6"
   }
 }
