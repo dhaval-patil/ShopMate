@@ -18,7 +18,7 @@ router.get('/get-product/:slug', getSingleProductController)
 router.get("/product-image/:pid", productImageController);
 
 //get delete
-router.delete("/product", deleteProductController);
+router.delete("/product/:pid", deleteProductController);
 
 //Update routess
 router.post('/update-product/:pid', requireSignIn, isAdmin, formidable(), updateProductController)

@@ -115,8 +115,8 @@ export const deleteProductController = async (req, res) => {
     try {
         await productModel.findByIdAndDelete(req.params.pid).select("-photo")
         res.status(200).send({
-            success:true,
-            message:"Product Deleted SuccessFully",
+            success: true,
+            message: "Product Deleted SuccessFully",
         })
     } catch (error) {
         console.log(error),
@@ -129,7 +129,7 @@ export const deleteProductController = async (req, res) => {
 };
 
 // update product
-export const updateProductController = async(req, res) => {
+export const updateProductController = async (req, res) => {
     try {
         const { name, slug, description, price, category, quantity, shipping } = req.fields;
         const { image } = req.files;
@@ -150,7 +150,7 @@ export const updateProductController = async(req, res) => {
                 return res.status(500).send({ error: 'Photo is required and should be less than 1MB' })
         }
         const products = await productModel.findByIdAndUpdate(req.params.pid,
-            {...req.fields, slug:slugify(name)}, {new:true}
+            { ...req.fields, slug: slugify(name) }, { new: true }
         )
         if (image) {
             products.image.data = fs.readFileSync(image.path)
