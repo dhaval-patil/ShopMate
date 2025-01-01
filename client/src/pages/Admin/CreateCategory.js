@@ -4,9 +4,16 @@ import AdminMenu from "../../components/Layout/AdminMenu";
 import toast from "react-hot-toast";
 import axios from "axios";
 import CategoryForm from "../../components/Form/CategoryForm";
+import {Modal} from "antd"
 const CreateCategory = () => {
   const [categories, setCategories] = useState([]);
-const [name, setName] = useState("");
+  const [name, setName] = useState("");
+  const [visible, setVisible] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selected, setSelected] = useState(null)
+  const [updatedName, setUpdatedName] = useState("")
+
+
 // handle formme
 const handleSubmit = async (e) =>{
     e.preventDefault()
@@ -42,6 +49,41 @@ const handleSubmit = async (e) =>{
   useEffect(() => {
     getAllCategory();
   }, []);
+
+  //update category
+  const handleUpdate = async(e) => {
+    e.preventDefault();
+    try {
+      const {data} = await axios.put(`${process.env.REACT_APP_API}/api/v1/category/update-category/${selected._id}`, {name:updatedName})
+      if(data.success){
+        toast.success(`${updatedName} is updated`);
+        setSelected(null)
+        setUpdatedName("")
+        setVisible(false)
+        getAllCategory();
+      }
+      
+    } catch (error) {
+      toast.error("Something Went Wrong")
+    }
+  }
+  
+  //Delete category
+  const handleDelete = async(pId) => {
+    try {
+      const {data} = await axios.delete(`${process.env.REACT_APP_API}/api/v1/category/delete-category/${pId}`)
+      if(data.success){
+        toast.success(`Category is Deleted`);
+        
+        setUpdatedName("")
+        
+        getAllCategory();
+      }
+      
+    } catch (error) {
+      toast.error("Something Went Wrong")
+    }
+  }
   return (
     <Layout>
       <div className="container-fluid m-3 p-3">
@@ -68,7 +110,8 @@ const handleSubmit = async (e) =>{
                       <tr>
                         <td key={c._id}>{c.name}</td>
                         <td>
-                          <button className="btn btn-primary">Edit</button>
+                          <button className="btn btn-primary"onClick={() => {setVisible(true) ; setUpdatedName(c.name); setSelected(c)}}>Edit</button>
+                          <button className="btn btn-danger ms-2" onClick={() => {handleDelete(c._id)}}>Delete</button>
                         </td>
                       </tr>
                     </>
@@ -77,6 +120,10 @@ const handleSubmit = async (e) =>{
               </table>
             </div>
           </div>
+          <Modal onCancel={() => setVisible(false)} footer={null} visible={visible}>
+            <CategoryForm value={updatedName} setValue={setUpdatedName} handleSubmit={handleUpdate} />
+
+          </Modal>
         </div>
       </div>
     </Layout>
