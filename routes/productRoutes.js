@@ -15,7 +15,7 @@ router.get('/get-product', getProductController)
 router.get('/get-product/:slug', getSingleProductController)
 
 //get photo
-router.get("/product-image/:pid", productImageController);
+router.get("/product-photo/:pid", productImageController);
 
 //get delete
 router.delete("/product/:pid", deleteProductController);
