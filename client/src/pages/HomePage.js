@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Layout from "../components/Layout/Layout";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import {Checkbox, Radio} from 'antd'
+import {Checkbox, Radio , Carousel} from 'antd'
 import { Prices } from "../components/Prices";
 import { useCart } from "../context/cart";
 import toast from "react-hot-toast";
@@ -19,6 +19,12 @@ const HomePage = () => {
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+
+  const bannerImages = [
+    "/images/Banner5.jpg",
+    "/images/Banner6.jpg",
+    "/images/Banner3.jpg",
+  ];
 
   //get all cat
   const getAllCategory = async () => {
@@ -121,6 +127,18 @@ const HomePage = () => {
 
   return (
     <Layout title={"All Product - best Offers"}>
+      <Carousel autoplay>
+        {bannerImages.map((img, index) => (
+          <div key={index}>
+            <img
+              src={img}
+              className="banner-img"
+              alt={`banner-${index}`}
+              style={{ width: "100%", maxHeight: "400px", objectFit: "cover" }}
+            />
+          </div>
+        ))}
+      </Carousel>
        <div className="container-fluid row mt-3 home-page">
         <div className="col-md-3 filters">
           <h4 className="text-center">Filter By Category</h4>
@@ -169,9 +187,9 @@ const HomePage = () => {
                  <div className="card-name-price">
                     <h5 className="card-title">{p.name}</h5>
                     <h5 className="card-title card-price">
-                      {p.price.toLocaleString("en-US", {
+                      {p.price.toLocaleString("en-IN", {
                         style: "currency",
-                        currency: "USD",
+                        currency: "INR",
                       })}
                     </h5>
                   </div>
